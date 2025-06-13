@@ -170,10 +170,13 @@ function handleGuess(letter) {
         // Wrong guess
         remainingAttempts--;
         const maxAttempts = getMaxAttempts();
-        const bodyPartIndex = maxAttempts - remainingAttempts - 1;
-        if (bodyPartIndex >= 0 && bodyPartIndex < bodyParts.length) {
-            bodyParts[bodyPartIndex].style.display = 'block';
+        const wrongGuesses = maxAttempts - remainingAttempts;
+        
+        // Show body parts based on wrong guesses
+        for (let i = 0; i < bodyParts.length; i++) {
+            bodyParts[i].style.display = i < wrongGuesses ? 'block' : 'none';
         }
+        
         updateAttemptsDisplay();
         
         if (remainingAttempts === 0) {
