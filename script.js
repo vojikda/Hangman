@@ -249,9 +249,11 @@ newGameBtn.addEventListener('click', () => {
 
 hintBtn.addEventListener('click', handleHint);
 
+// Add event listeners to difficulty buttons
 document.querySelectorAll('.difficulty-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        handleDifficultySelection(btn.dataset.difficulty);
+    btn.addEventListener('click', (e) => {
+        const difficulty = e.target.dataset.difficulty;
+        handleDifficultySelection(difficulty);
     });
 });
 
@@ -268,7 +270,5 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Load stats and show difficulty selection
-loadStats();
-difficultyContainer.style.display = 'block';
-gameContainer.style.display = 'none'; 
+// Initialize the game
+loadStats(); 

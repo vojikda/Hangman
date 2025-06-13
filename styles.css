@@ -58,6 +58,7 @@ h1 {
     border-radius: 10px;
     margin-bottom: 30px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: block;
 }
 
 .difficulty-container h2 {
@@ -100,6 +101,7 @@ h1 {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    display: none;
 }
 
 .hangman-drawing {
@@ -275,4 +277,10 @@ h1 {
         width: 250px;
         height: 250px;
     }
+}
+
+/* Add transition for smooth display changes */
+.difficulty-container,
+.game-container {
+    transition: opacity 0.3s ease;
 } 
