@@ -9,7 +9,41 @@
 <body>
     <div class="container">
         <h1>Hangman Game</h1>
-        <div class="game-container">
+        
+        <!-- Game Stats -->
+        <div class="stats-container">
+            <div class="stat">
+                <span class="stat-label">Games Played:</span>
+                <span id="games-played">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Wins:</span>
+                <span id="wins">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Win Rate:</span>
+                <span id="win-rate">0%</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">High Score:</span>
+                <span id="high-score">0</span>
+            </div>
+        </div>
+
+        <!-- Difficulty Selection -->
+        <div class="difficulty-container" id="difficulty-container">
+            <h2>Select Difficulty</h2>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn" data-difficulty="easy">Easy (8 attempts)</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium (6 attempts)</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard (4 attempts)</button>
+            </div>
+        </div>
+
+        <div class="game-container" id="game-container" style="display: none;">
+            <!-- Timer -->
+            <div class="timer" id="timer">Time: 0s</div>
+            
             <div class="hangman-drawing">
                 <svg id="hangman-svg" viewBox="0 0 300 300">
                     <!-- Base -->
@@ -38,7 +72,10 @@
                 <div class="word-display" id="word-display"></div>
                 <div class="keyboard" id="keyboard"></div>
                 <div class="message" id="message"></div>
-                <button id="new-game-btn">New Game</button>
+                <div class="game-buttons">
+                    <button id="new-game-btn">New Game</button>
+                    <button id="hint-btn">Hint (3 left)</button>
+                </div>
             </div>
         </div>
     </div>

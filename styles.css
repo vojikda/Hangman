@@ -26,6 +26,75 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Stats Container */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stat {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Difficulty Selection */
+.difficulty-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.difficulty-container h2 {
+    color: #1a73e8;
+    margin-bottom: 20px;
+}
+
+.difficulty-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.difficulty-btn {
+    background-color: #e8eaed;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.difficulty-btn:hover {
+    background-color: #1a73e8;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Timer */
+.timer {
+    font-size: 1.2rem;
+    color: #1a73e8;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
 .game-container {
     background-color: white;
     border-radius: 10px;
@@ -106,6 +175,38 @@ h1 {
     animation: pulse 1s infinite;
 }
 
+.game-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#new-game-btn, #hint-btn {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+#new-game-btn:hover, #hint-btn:hover {
+    background-color: #1557b0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+}
+
+#hint-btn:disabled {
+    background-color: #9aa0a6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -118,28 +219,37 @@ h1 {
     }
 }
 
-#new-game-btn {
-    background-color: #1a73e8;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: bold;
-    margin-top: 20px;
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
 }
 
-#new-game-btn:hover {
-    background-color: #1557b0;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
+.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes reveal {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.reveal {
+    animation: reveal 0.5s ease-out;
 }
 
 @media (max-width: 600px) {
     .container {
         padding: 10px;
+    }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .difficulty-buttons {
+        flex-direction: column;
     }
 
     h1 {
