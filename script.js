@@ -94,6 +94,15 @@ function updateTimerDisplay() {
     timerDisplay.textContent = `Time: ${seconds}s`;
 }
 
+// Get max attempts based on difficulty
+function getMaxAttempts() {
+    switch(currentDifficulty) {
+        case 'easy': return 8;
+        case 'hard': return 4;
+        default: return 6;
+    }
+}
+
 // Initialize the game
 function initGame() {
     // Reset game state
@@ -108,7 +117,11 @@ function initGame() {
     updateAttemptsDisplay();
     message.textContent = `Guess the word! You have ${remainingAttempts} attempts.`;
     message.style.color = '#1a73e8';
+    
+    // Reset hangman drawing
     bodyParts.forEach(part => part.style.display = 'none');
+    
+    // Update hint button
     hintBtn.textContent = `Hint (${hintsLeft} left)`;
     hintBtn.disabled = false;
     
@@ -125,15 +138,6 @@ function initGame() {
 
     // Start timer
     startTimer();
-}
-
-// Get max attempts based on difficulty
-function getMaxAttempts() {
-    switch(currentDifficulty) {
-        case 'easy': return 8;
-        case 'hard': return 4;
-        default: return 6;
-    }
 }
 
 // Update attempts display
@@ -165,7 +169,11 @@ function handleGuess(letter) {
     } else {
         // Wrong guess
         remainingAttempts--;
-        bodyParts[getMaxAttempts() - remainingAttempts].style.display = 'block';
+        const maxAttempts = getMaxAttempts();
+        const bodyPartIndex = maxAttempts - remainingAttempts - 1;
+        if (bodyPartIndex >= 0 && bodyPartIndex < bodyParts.length) {
+            bodyParts[bodyPartIndex].style.display = 'block';
+        }
         updateAttemptsDisplay();
         
         if (remainingAttempts === 0) {
