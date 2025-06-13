@@ -5,76 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangman Game</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <h1>Hangman Game</h1>
         
-        <!-- Game Stats -->
-        <div class="stats-container">
-            <div class="stat">
-                <span class="stat-label">Games Played:</span>
-                <span id="games-played">0</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">Wins:</span>
-                <span id="wins">0</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">Win Rate:</span>
-                <span id="win-rate">0%</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">High Score:</span>
-                <span id="high-score">0</span>
-            </div>
-        </div>
-
-        <!-- Difficulty Selection -->
-        <div class="difficulty-container" id="difficulty-container">
+        <!-- Difficulty Selection Screen -->
+        <div id="difficulty-container" class="difficulty-container">
             <h2>Select Difficulty</h2>
             <div class="difficulty-buttons">
-                <button class="difficulty-btn" data-difficulty="easy">Easy (8 attempts)</button>
-                <button class="difficulty-btn" data-difficulty="medium">Medium (6 attempts)</button>
-                <button class="difficulty-btn" data-difficulty="hard">Hard (4 attempts)</button>
+                <button class="difficulty-btn" data-difficulty="easy">
+                    <span class="difficulty-icon">🌱</span>
+                    <span class="difficulty-name">Easy</span>
+                    <span class="difficulty-desc">8 attempts</span>
+                </button>
+                <button class="difficulty-btn" data-difficulty="medium">
+                    <span class="difficulty-icon">🌿</span>
+                    <span class="difficulty-name">Medium</span>
+                    <span class="difficulty-desc">6 attempts</span>
+                </button>
+                <button class="difficulty-btn" data-difficulty="hard">
+                    <span class="difficulty-icon">🌳</span>
+                    <span class="difficulty-name">Hard</span>
+                    <span class="difficulty-desc">4 attempts</span>
+                </button>
             </div>
         </div>
 
-        <div class="game-container" id="game-container" style="display: none;">
-            <!-- Timer -->
-            <div class="timer" id="timer">Time: 0s</div>
-            
-            <div class="hangman-drawing">
-                <svg id="hangman-svg" viewBox="0 0 300 300">
-                    <!-- Base -->
-                    <line x1="50" y1="250" x2="250" y2="250" stroke="black" stroke-width="4"/>
-                    <!-- Vertical pole -->
-                    <line x1="100" y1="250" x2="100" y2="50" stroke="black" stroke-width="4"/>
-                    <!-- Top beam -->
-                    <line x1="100" y1="50" x2="200" y2="50" stroke="black" stroke-width="4"/>
-                    <!-- Rope -->
-                    <line x1="200" y1="50" x2="200" y2="80" stroke="black" stroke-width="4"/>
-                    <!-- Head -->
-                    <circle cx="200" cy="100" r="20" stroke="black" stroke-width="4" fill="none" class="body-part"/>
-                    <!-- Body -->
-                    <line x1="200" y1="120" x2="200" y2="180" stroke="black" stroke-width="4" class="body-part"/>
-                    <!-- Left arm -->
-                    <line x1="200" y1="140" x2="160" y2="160" stroke="black" stroke-width="4" class="body-part"/>
-                    <!-- Right arm -->
-                    <line x1="200" y1="140" x2="240" y2="160" stroke="black" stroke-width="4" class="body-part"/>
-                    <!-- Left leg -->
-                    <line x1="200" y1="180" x2="160" y2="220" stroke="black" stroke-width="4" class="body-part"/>
-                    <!-- Right leg -->
-                    <line x1="200" y1="180" x2="240" y2="220" stroke="black" stroke-width="4" class="body-part"/>
-                </svg>
+        <!-- Game Screen -->
+        <div id="game-container" class="game-container">
+            <div class="game-header">
+                <div class="game-info">
+                    <div id="timer" class="timer">Time: 0s</div>
+                    <div class="difficulty-badge" id="current-difficulty">Medium</div>
+                </div>
+                <div class="game-controls">
+                    <button id="sound-btn" class="control-btn" onclick="toggleSound()" title="Disable Sound">🔊</button>
+                    <button id="new-game-btn" class="control-btn">New Game</button>
+                </div>
             </div>
-            <div class="game-info">
-                <div class="word-display" id="word-display"></div>
-                <div class="keyboard" id="keyboard"></div>
-                <div class="message" id="message"></div>
-                <div class="game-buttons">
-                    <button id="new-game-btn">New Game</button>
-                    <button id="hint-btn">Hint (3 left)</button>
+
+            <div class="game-content">
+                <div class="hangman-container">
+                    <div class="hangman">
+                        <div class="body-part" id="head"></div>
+                        <div class="body-part" id="body"></div>
+                        <div class="body-part" id="left-arm"></div>
+                        <div class="body-part" id="right-arm"></div>
+                        <div class="body-part" id="left-leg"></div>
+                        <div class="body-part" id="right-leg"></div>
+                        <div class="gallows"></div>
+                    </div>
+                </div>
+
+                <div class="game-info-container">
+                    <div id="word-display" class="word-display"></div>
+                    <div id="message" class="message"></div>
+                    <div id="keyboard" class="keyboard"></div>
+                    <button id="hint-btn" class="hint-btn">Hint (3 left)</button>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-label">Games Played:</span>
+                    <span id="games-played" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Wins:</span>
+                    <span id="wins" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Win Rate:</span>
+                    <span id="win-rate" class="stat-value">0%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">High Score:</span>
+                    <span id="high-score" class="stat-value">0</span>
                 </div>
             </div>
         </div>

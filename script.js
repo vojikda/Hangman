@@ -31,6 +31,16 @@ let stats = {
     wins: 0,
     highScore: 0
 };
+let soundEnabled = true;
+
+// Sound effects
+const sounds = {
+    correct: new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'),
+    wrong: new Audio('https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3'),
+    win: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'),
+    lose: new Audio('https://assets.mixkit.co/active_storage/sfx/2658/2658-preview.mp3'),
+    hint: new Audio('https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3')
+};
 
 // DOM elements
 const wordDisplay = document.getElementById('word-display');
@@ -152,6 +162,22 @@ function updateAttemptsDisplay() {
     }
 }
 
+// Play sound effect
+function playSound(soundName) {
+    if (soundEnabled && sounds[soundName]) {
+        sounds[soundName].currentTime = 0;
+        sounds[soundName].play();
+    }
+}
+
+// Toggle sound
+function toggleSound() {
+    soundEnabled = !soundEnabled;
+    const soundBtn = document.getElementById('sound-btn');
+    soundBtn.innerHTML = soundEnabled ? '🔊' : '🔇';
+    soundBtn.title = soundEnabled ? 'Disable Sound' : 'Enable Sound';
+}
+
 // Handle letter guess
 function handleGuess(letter) {
     if (gameOver || guessedLetters.has(letter)) return;
@@ -162,12 +188,14 @@ function handleGuess(letter) {
     
     if (currentWord.includes(letter)) {
         // Correct guess
+        playSound('correct');
         updateWordDisplay();
         if (!wordDisplay.textContent.includes('_')) {
             endGame(true);
         }
     } else {
         // Wrong guess
+        playSound('wrong');
         remainingAttempts--;
         const maxAttempts = getMaxAttempts();
         const wrongGuesses = maxAttempts - remainingAttempts;
@@ -197,6 +225,9 @@ function updateWordDisplay() {
 function endGame(won) {
     gameOver = true;
     stopTimer();
+    
+    // Play appropriate sound
+    playSound(won ? 'win' : 'lose');
     
     // Update stats
     stats.gamesPlayed++;
@@ -233,6 +264,7 @@ function handleHint() {
             .filter(letter => !guessedLetters.has(letter));
         
         if (unguessedLetters.length > 0) {
+            playSound('hint');
             const randomLetter = unguessedLetters[Math.floor(Math.random() * unguessedLetters.length)];
             handleGuess(randomLetter);
             hintsLeft--;
