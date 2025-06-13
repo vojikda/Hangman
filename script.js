@@ -1,15 +1,28 @@
-// List of words for the game
+// List of words for the game (max 6 letters)
 const words = [
-    'JAVASCRIPT',
-    'PYTHON',
-    'PROGRAMMING',
-    'COMPUTER',
-    'DEVELOPER',
-    'INTERNET',
-    'KEYBOARD',
-    'MONITOR',
-    'SOFTWARE',
-    'HARDWARE'
+    'APPLE',
+    'BEACH',
+    'CLOUD',
+    'DREAM',
+    'EARTH',
+    'FLAME',
+    'GREEN',
+    'HEART',
+    'JUICE',
+    'KNIFE',
+    'LIGHT',
+    'MUSIC',
+    'NIGHT',
+    'OCEAN',
+    'PEACE',
+    'QUEEN',
+    'RIVER',
+    'SMILE',
+    'TIGER',
+    'VOICE',
+    'WATER',
+    'YOUTH',
+    'ZEBRA'
 ];
 
 // Game state
@@ -34,8 +47,10 @@ function initGame() {
     gameOver = false;
     
     // Reset UI
-    wordDisplay.textContent = '_ '.repeat(currentWord.length);
-    message.textContent = '';
+    updateWordDisplay();
+    updateAttemptsDisplay();
+    message.textContent = 'Guess the word! You have 6 attempts.';
+    message.style.color = '#1a73e8';
     bodyParts.forEach(part => part.style.display = 'none');
     
     // Create keyboard
@@ -47,6 +62,16 @@ function initGame() {
         key.textContent = letter;
         key.addEventListener('click', () => handleGuess(letter));
         keyboard.appendChild(key);
+    }
+}
+
+// Update attempts display
+function updateAttemptsDisplay() {
+    message.textContent = `Remaining attempts: ${remainingAttempts}`;
+    if (remainingAttempts <= 2) {
+        message.style.color = '#f44336';
+    } else {
+        message.style.color = '#1a73e8';
     }
 }
 
@@ -68,6 +93,8 @@ function handleGuess(letter) {
         // Wrong guess
         remainingAttempts--;
         bodyParts[6 - remainingAttempts].style.display = 'block';
+        updateAttemptsDisplay();
+        
         if (remainingAttempts === 0) {
             endGame(false);
         }
@@ -85,8 +112,13 @@ function updateWordDisplay() {
 // End game
 function endGame(won) {
     gameOver = true;
-    message.textContent = won ? 'Congratulations! You won!' : `Game Over! The word was ${currentWord}`;
-    message.style.color = won ? '#4caf50' : '#f44336';
+    if (won) {
+        message.textContent = 'Congratulations! You won! 🎉';
+        message.style.color = '#4caf50';
+    } else {
+        message.textContent = `Game Over! You ran out of attempts. The word was ${currentWord} 😢`;
+        message.style.color = '#f44336';
+    }
 }
 
 // Event listeners
